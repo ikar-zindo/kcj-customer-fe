@@ -7,5 +7,24 @@ export default defineConfig({
   
   server: {
     port: 9000
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8889',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ''),
+    //   },
+    //   '/csrf': {
+    //     target: 'http://localhost:8889',
+    //     changeOrigin: true,
+    //   },
+    //   '/login': {
+    //     target: 'http://localhost:8889',
+    //     changeOrigin: true,
+    //   },
+    //   '/logout': {
+    //     target: 'http://localhost:8889',
+    //     changeOrigin: true,
+    //   },
+    // },
   }
 })

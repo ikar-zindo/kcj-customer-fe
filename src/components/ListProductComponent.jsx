@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { listProducts } from '../services/ProductService';
 
-
 const ListProductComponent = () => {
 
-   const [products, setProducts] = useState([])
+   const [products, setProducts] = useState([]);
 
    useEffect(() => {
       listProducts().then((response) => {
@@ -15,10 +14,11 @@ const ListProductComponent = () => {
    }, []);
 
    return (
+   <main>
       <div className="album py-5">
          <div className="container">
             <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4">
-               
+
                {products.map((product) => (
                   <div key={product.id} className="col">
                      <div className="card shadow-sm bg-body-secondary">
@@ -34,9 +34,8 @@ const ListProductComponent = () => {
                                  />
                               </div>
                               <div>
-                                 <a className="text-shojumaru-regular" href="#">
-                                    <h3>{product.name}</h3>
-                                 </a>
+                                 <h3 className="text-shojumaru-regular text-primary">{product.name}</h3>
+                                 
                                  <p>{product.description}</p>
                               </div>
                            </div>
@@ -78,6 +77,7 @@ const ListProductComponent = () => {
             </div>
          </div>
       </div>
+   </main>
    );
 }
 
