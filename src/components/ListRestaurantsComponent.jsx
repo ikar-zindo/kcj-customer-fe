@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {listRestaurants} from '../services/RestaurantService';
 import {Link} from 'react-router-dom';
-import axios from "axios";
 
 const ListRestaurantsComponent = () => {
 
@@ -11,14 +10,7 @@ const ListRestaurantsComponent = () => {
 	useEffect(() => {
 		const fetchRestaurants = async () => {
 			try {
-				const  accessToken = localStorage.getItem("accessToken");
-
-				const response = await axios.get('http://localhost:8889/restaurant', {
-					headers: {
-						'Authorization': 'Bearer ' + accessToken
-					}
-				});
-
+				const response = await listRestaurants();
 				setRestaurants(response.data);
 			} catch (error) {
 				console.error('Error fetching restaurants:', error);
@@ -52,7 +44,9 @@ const ListRestaurantsComponent = () => {
 											<div>
 												<Link
 													className="text-shojumaru-regular"
-													to={`/restaurant/${restaurant.id}`}>
+													to={`/restaurant/${restaurant.id}`}
+													onClick={() => localStorage.setItem('restaurantId', restaurant.id)}
+												>
 													<h3>{restaurant.name}</h3>
 												</Link>
 												<p>{restaurant.description}</p>
