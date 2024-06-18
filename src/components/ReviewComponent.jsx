@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import * as ReviewService from "../services/RestaurantService.js";
+import * as ReviewService from "../services/ReviewService.js";
 
 const ReviewComponent = () => {
 	const restaurantId = localStorage.getItem('restaurantId');

@@ -1,52 +1,89 @@
 import React, {useEffect, useState} from 'react'
 import {getRestaurantById} from '../services/RestaurantService';
+import {navigateToAddReview} from '../services/ReviewService';
 import {useNavigate} from 'react-router-dom'
 
 const ListRestaurantProductsComponent = () => {
 
 	const restaurantId = localStorage.getItem('restaurantId')
-	const [products, setProducts] = useState([])
-	const [reviews, setReview] = useState([])
+	const [reviews, setReviews] = useState([])
 	const [error, setError] = useState(null);
+	const [products, setProducts] = useState([])
 	const [restaurant, setRestaurant] = useState(null)
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchRestaurantProducts = async () => {
 			try {
 				const response = await getRestaurantById(restaurantId);
-
-				// setRestaurant(response.data)
+				setRestaurant(response.data);
 				setProducts(response.data.products);
-				setReview(response.data)
+				setReviews(response.data.reviews);
 			} catch (error) {
-				console.error('Error fetching restaurants:', error);
-				setError(error.message || 'Failed to fetch restaurants.');
+				console.error('Error fetching restaurant products:', error);
+				setError(error.message || 'Failed to fetch restaurant products.');
 			}
 		};
 
 		fetchRestaurantProducts()
 	}, []);
 
-
-	const navigator = useNavigate();
-
-	function addReview() {
-		navigator('/add-review')
+	const handleAddReview = () => {
+		navigateToAddReview(navigate)
 	}
 
 	return (
-
 		<main>
 			<div className="album py-5">
 
-				<button className='btn btn-primary mb-2 mx-5' onClick={addReview}>Add review</button>
+				<button className='btn btn-primary mb-2 mx-5' onClick={handleAddReview}>Add review</button>
 
-				{/*<h2 className="mx-5 text-shojumaru-regular text-my-light">{restaurant.name}</h2>*/}
+				{reviews ? (
+					<table className="table table-striped table-bordered">
+						<thead>
+						<tr>
+							<th>review Id</th>
+							<th>rating</th>
+							<th>comment</th>
+							<th>firstName</th>
+							<th>lastName</th>
+						</tr>
+						</thead>
+						<tbody>
+						{reviews.map((review) => (
+							<tr key={review.id}>
+								<td>{review.id}</td>
+								<td>{review.rating}</td>
+								<td>{review.comment}</td>
+								<td>{review.customer.firstName}</td>
+								<td>{review.customer.lastName}</td>
+								{/*<td>*/}
+								{/*	<button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>Update</button>*/}
+
+								{/*	<button className="btn btn-danger" onClick={() => removeEmployee(employee.id)}*/}
+								{/*			  style={{marginLeft: '10px'}}*/}
+								{/*	>Delete</button>*/}
+								{/*</td>*/}
+							</tr>
+						))}
+						</tbody>
+					</table>
+				) : (
+					<p>Loading...</p>
+				)
+				}
+
+				{restaurant ? (
+					<h2 className="mx-5 text-shojumaru-regular text-my-light">{restaurant.name}</h2>
+				) : (
+					<p>Loading...</p>
+				)}
 
 				<div className="container">
 					<div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4">
 
-						{products.map((product) => (
+						{products ? (products.map((product) => (
 							<div key={product.id} className="col">
 								<div className="card shadow-sm bg-body-secondary">
 									<div className="card-body">
@@ -97,7 +134,9 @@ const ListRestaurantProductsComponent = () => {
 									</div>
 								</div>
 							</div>
-						))}
+						))): (
+							<p>Loading...</p>
+						)}
 
 					</div>
 				</div>

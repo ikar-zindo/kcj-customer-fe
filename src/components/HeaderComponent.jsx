@@ -1,27 +1,16 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import axios from "axios";
+import {getRestaurants} from '../services/RestaurantService';
 
 const HeaderComponent = () => {
 
 	const navigate = useNavigate();
 
+	// простая отработака GET запроса для перехода на страницу с ресторанами
 	const handleToRestaurantClick = async (e) => {
 		e.preventDefault();
-
-		const accessToken = localStorage.getItem('accessToken');
-
-		if (!accessToken) {
-			console.error('Access token not found');
-			return;
-		}
-
 		try {
-			const response = await axios.get('http://localhost:8889/restaurant', {
-				headers: {
-					'Authorization': 'Bearer ' + accessToken
-				}
-			});
+			await getRestaurants();
 			navigate('/restaurant');
 		} catch (error) {
 			console.error('!!!Error fetching rectic:', error);
@@ -45,8 +34,7 @@ const HeaderComponent = () => {
 				<ul className="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 					<li><a href="/" className="nav-link px-2 link-secondary">Home</a></li>
 					<li><a href="/product" className="nav-link px-2 active">Menu</a></li>
-					<li><a onClick={handleToRestaurantClick} href="/restaurant" className="nav-link px-2">Restaurants</a>
-					</li>
+					<li><a onClick={handleToRestaurantClick} href="/restaurant" className="nav-link px-2">Restaurants</a></li>
 				</ul>
 
 				<div className="text-end">

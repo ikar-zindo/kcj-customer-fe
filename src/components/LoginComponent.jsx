@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:8889';
+import {jwtService, logoutService} from "../services/JwtService.js";
 
 const LoginComponent = () => {
 	const [username, setUsername] = useState('');
@@ -9,50 +7,24 @@ const LoginComponent = () => {
 	const [tokens, setTokens] = useState(null);
 	const [error, setError] = useState(null);
 
+	// jwtService
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post(`${API_BASE_URL}/jwt/tokens`, {}, {
-				headers: {
-					'Authorization': 'Basic ' + btoa(username + ':' + password)
-				}
-			});
-			if (response.status == 200) { // сохранение в localStorage
-				console.log('Login successful');
-
-				setTokens(response.data);
-				localStorage.setItem('accessToken', response.data.accessToken);
-				localStorage.setItem('accessTokenExpiry', response.data.accessTokenExpiry);
-				localStorage.setItem('refreshToken', response.data.refreshToken);
-				localStorage.setItem('refreshTokenExpire', response.data.refreshTokenExpire);
-				setError(null);
-			} else {
-				console.log('Login field ' + response.statusText + ' status ' + response.status);
-			}
+			const response = await jwtService(username, password)
+			setTokens(response.data);
+			setError(null);
 		} catch (error) {
 			console.error('Error fetching token:', error);
 			setError('Error fetching token: ' + error.message);
 		}
 	};
 
+	// logoutService
 	const handleLogout = async () => {
-		const refreshToken = localStorage.getItem('refreshToken');
 		try {
-			const response = await axios.post('http://localhost:8889/jwt/logout', {}, {
-				headers: {
-					'Authorization': 'Bearer ' + refreshToken
-				}
-			});
-			if (response.status === 204) {
-				console.log('Logout successful');
-				localStorage.removeItem('accessToken');
-				localStorage.removeItem('accessTokenExpiry');
-				localStorage.removeItem('refreshToken');
-				localStorage.removeItem('refreshTokenExpire');
-				setTokens(null);
-			} else {
-				console.error('Logout failed:', response.statusText);
-			}
+			await logoutService();
+			setTokens(null);
 		} catch (error) {
 			console.error('Error during logout:', error);
 		}
@@ -75,14 +47,14 @@ const LoginComponent = () => {
 				<div id="tokenDisplay">
 					<p>Access Token:</p>
 					<div className='w-50'>
-						<p className="text-break" style={{fontSize: '10px'}}>{tokens.accessToken}</p>
+						<p className="mx-5 text-break" style={{fontSize: '10px'}}>{tokens.accessToken}</p>
 					</div>
-					<p>Access Token Expiry: {tokens.accessTokenExpiry}</p>
+					<p  className='mx-2'>Access Token Expiry: {tokens.accessTokenExpiry}</p>
 					<p>Refresh Token:</p>
 					<div className='w-50'>
-						<p className="text-break" style={{fontSize: '9px'}}>{tokens.refreshToken}</p>
+						<p className="mx-5 text-break" style={{fontSize: '9px'}}>{tokens.refreshToken}</p>
 					</div>
-					<p>Refresh Token Expiry: {tokens.refreshTokenExpire}</p>
+					<p className='mx-2'>Refresh Token Expiry: {tokens.refreshTokenExpire}</p>
 				</div>
 			)}
 

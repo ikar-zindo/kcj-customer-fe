@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from 'react'
-import {listRestaurants} from '../services/RestaurantService';
-import {Link} from 'react-router-dom';
+import {getRestaurantById, getRestaurants} from '../services/RestaurantService';
+import {Link, useNavigate} from 'react-router-dom';
 
 const ListRestaurantsComponent = () => {
 
 	const [restaurants, setRestaurants] = useState([])
 	const [error, setError] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchRestaurants = async () => {
 			try {
-				const response = await listRestaurants();
+				const response = await getRestaurants();
 				setRestaurants(response.data);
+				// console.log(response);
 			} catch (error) {
 				console.error('Error fetching restaurants:', error);
 				setError(error.message || 'Failed to fetch restaurants.');
@@ -23,6 +25,17 @@ const ListRestaurantsComponent = () => {
 
 	if (error) {
 		return <div>Error: {error}</div>;
+	}
+
+	const handleToRestaurantClick = async (e) => {
+		e.preventDefault();
+		try {
+			const restaurantId = localStorage.getItem('restaurantId');
+			await getRestaurantById(restaurantId);
+			navigate('/restaurant/' + restaurantId);
+		} catch (error) {
+			console.error('ERROR', error)
+		}
 	}
 
 	return (
