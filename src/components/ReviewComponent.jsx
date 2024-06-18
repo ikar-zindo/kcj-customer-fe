@@ -1,11 +1,29 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import * as ReviewService from "../services/ReviewService.js";
+import {useNavigate} from "react-router-dom";
+import {getRestaurantById} from "../services/RestaurantService.js";
 
 const ReviewComponent = () => {
 	const restaurantId = localStorage.getItem('restaurantId');
 	const [rating, setRating] = useState('');
 	const [comment, setComment] = useState('');
 	const [error, setError] = useState(null);
+	const [reviews, setReviews] = useState([])
+
+	useEffect(() => {
+		const fetchRestaurantProducts = async () => {
+			try {
+				const response = await getRestaurantById(restaurantId);
+				setReviews(response.data.reviews);
+			} catch (error) {
+				console.error('Error fetching reviews products:', error);
+				setError(error.message || 'Failed to fetch restaurant reviews.');
+			}
+		};
+
+		fetchRestaurantProducts()
+	}, []);
+
 
 	const saveReview = async (e) => {
 		e.preventDefault();
@@ -23,6 +41,43 @@ const ReviewComponent = () => {
 
 	return (
 		<div className='container'>
+
+			{reviews ? (
+				<table className="table table-striped table-bordered">
+					<thead>
+					<tr>
+						<th>review Id</th>
+						<th>rating</th>
+						<th>comment</th>
+						<th>firstName</th>
+						<th>lastName</th>
+					</tr>
+					</thead>
+					<tbody>
+					{reviews.map((review) => (
+						<tr key={review.id}>
+							<td>{review.id}</td>
+							<td>{review.rating}</td>
+							<td>{review.comment}</td>
+							<td>{review.customer.firstName}</td>
+							<td>{review.customer.lastName}</td>
+							{/*<td>*/}
+							{/*	<button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>Update</button>*/}
+
+							{/*	<button className="btn btn-danger" onClick={() => removeEmployee(employee.id)}*/}
+							{/*			  style={{marginLeft: '10px'}}*/}
+							{/*	>Delete</button>*/}
+							{/*</td>*/}
+						</tr>
+					))}
+					</tbody>
+				</table>
+			) : (
+				<p>Loading...</p>
+			)
+			}
+
+
 			<div className='row'>
 				<div className='card col-6 offset-3 offset-3'>
 					<h2 className='text-center'>Add review</h2>

@@ -39,41 +39,6 @@ const ListRestaurantProductsComponent = () => {
 
 				<button className='btn btn-primary mb-2 mx-5' onClick={handleAddReview}>Add review</button>
 
-				{reviews ? (
-					<table className="table table-striped table-bordered">
-						<thead>
-						<tr>
-							<th>review Id</th>
-							<th>rating</th>
-							<th>comment</th>
-							<th>firstName</th>
-							<th>lastName</th>
-						</tr>
-						</thead>
-						<tbody>
-						{reviews.map((review) => (
-							<tr key={review.id}>
-								<td>{review.id}</td>
-								<td>{review.rating}</td>
-								<td>{review.comment}</td>
-								<td>{review.customer.firstName}</td>
-								<td>{review.customer.lastName}</td>
-								{/*<td>*/}
-								{/*	<button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>Update</button>*/}
-
-								{/*	<button className="btn btn-danger" onClick={() => removeEmployee(employee.id)}*/}
-								{/*			  style={{marginLeft: '10px'}}*/}
-								{/*	>Delete</button>*/}
-								{/*</td>*/}
-							</tr>
-						))}
-						</tbody>
-					</table>
-				) : (
-					<p>Loading...</p>
-				)
-				}
-
 				{restaurant ? (
 					<h2 className="mx-5 text-shojumaru-regular text-my-light">{restaurant.name}</h2>
 				) : (
