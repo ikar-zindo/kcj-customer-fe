@@ -11,27 +11,26 @@ Currently, two official plugins are available:
 
 ```bash
 # Collect images for all services
-docker-compose -p ems build
+docker-compose -p kcj build
 
 # Start all services
-docker-compose -p ems up -d
+docker-compose -p kcj up -d
 
 # Check the status of running containers
-docker-compose -p ems ps
+docker-compose -p kcj ps
 
 # View logs (optional)
-docker-compose -p ems logs -f
+docker-compose -p kcj logs -f
 
 # Stop all services
-docker-compose -p ems stop
+docker-compose -p kcj stop
 
 # Start all services
-docker-compose -p ems start
+docker-compose -p kcj start
 
 # Deactivate all services (if necessary)
 docker-compose -p ems down
 ```
-
 
 ```
 fnm env --use-on-cd | Out-String | Invoke-Expression

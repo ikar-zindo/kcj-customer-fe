@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.3.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: kcj
+    ports:
+      - "3308:3306"
+
+  be:
+    image: ikarzindo/kcj-customer-be:latest
+    depends_on:
+      - db
+    environment:
+      - DATASOURCE_DATABASE_HOST=db
+      - DATASOURCE_DATABASE_PORT=3306
+      - DATASOURCE_DATABASE_NAME=kcj
+      - DATASOURCE_DATABASE_USERNAME=root
+      - DATASOURCE_DATABASE_PASSWORD=12345
+    restart: always
+    ports:
+      - "8889:8889"
+
+  fe:
+    image: ikarzindo/kcj-customer-fe:latest
+    environment:
+      - NODE_ENV=development
+    restart: always
+    ports:
+      - "9000:9000"
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=30

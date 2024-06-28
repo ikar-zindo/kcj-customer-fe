@@ -21,6 +21,14 @@ export const saveReview = (restaurantId, reviewDto) => {
 	}
 };
 
+export const getReviewsByRestaurantId = (restaurantId) => {
+	return axios.get(`${REST_API_RESTAURANT}/${restaurantId}/reviews`, {
+		headers: {
+			'Authorization': 'Bearer ' + accessToken
+		}
+	});
+}
+
 export const navigateToAddReview = (navigate) => {
 	navigate('/add-review');
 };

@@ -33,7 +33,6 @@ const LoginComponent = () => {
 	return (
 		<div className="App">
 
-
 			<div className="modal modal-sheet position-static d-block bg-body-tertiary p-4 py-md-5"
 				  tabIndex="-1"
 				  role="dialog"
@@ -41,7 +40,6 @@ const LoginComponent = () => {
 				<div className="modal-dialog" role="document">
 					<div className="modal-content rounded-4 shadow">
 						<div className="modal-header p-5 pb-4 border-bottom-0">
-							<h1 className="fw-bold mb-0 fs-2">Get Access Token</h1>
 							<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 
@@ -67,7 +65,7 @@ const LoginComponent = () => {
 								</div>
 
 								<button className="w-100 mb-2 btn btn-lg rounded-3 btn-primary text-shojumaru-regular"
-										  type="submit">Sign up
+										  type="submit">Login
 								</button>
 							</form>
 

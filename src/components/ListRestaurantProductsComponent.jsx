@@ -6,7 +6,6 @@ import {useNavigate} from 'react-router-dom'
 const ListRestaurantProductsComponent = () => {
 
 	const restaurantId = localStorage.getItem('restaurantId')
-	const [reviews, setReviews] = useState([])
 	const [error, setError] = useState(null);
 	const [products, setProducts] = useState([])
 	const [restaurant, setRestaurant] = useState(null)
@@ -19,7 +18,6 @@ const ListRestaurantProductsComponent = () => {
 				const response = await getRestaurantById(restaurantId);
 				setRestaurant(response.data);
 				setProducts(response.data.products);
-				setReviews(response.data.reviews);
 			} catch (error) {
 				console.error('Error fetching restaurant products:', error);
 				setError(error.message || 'Failed to fetch restaurant products.');
@@ -35,15 +33,24 @@ const ListRestaurantProductsComponent = () => {
 
 	return (
 		<main>
+
+			<div className='container'>
+
+				<div className='row align-items-center'>
+					<div className='col-md-6'>
+						{restaurant ? (
+							<h2 className="mx-5 text-shojumaru-regular text-my-light">{restaurant.name}</h2>
+						) : (
+							<p>Loading...</p>
+						)}
+					</div>
+					<div className='col-md-6'>
+						<button className='btn btn-primary mb-2 mx-5' onClick={handleAddReview}>Add review</button>
+					</div>
+				</div>
+			</div>
+
 			<div className="album py-5">
-
-				<button className='btn btn-primary mb-2 mx-5' onClick={handleAddReview}>Add review</button>
-
-				{restaurant ? (
-					<h2 className="mx-5 text-shojumaru-regular text-my-light">{restaurant.name}</h2>
-				) : (
-					<p>Loading...</p>
-				)}
 
 				<div className="container">
 					<div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-4">
@@ -99,7 +106,7 @@ const ListRestaurantProductsComponent = () => {
 									</div>
 								</div>
 							</div>
-						))): (
+						))) : (
 							<p>Loading...</p>
 						)}
 

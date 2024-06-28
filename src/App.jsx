@@ -7,7 +7,31 @@ import ListRestaurantProductsComponent from './components/ListRestaurantProducts
 import ReviewComponent from './components/ReviewComponent';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginComponent from './components/LoginComponent';
-
+// const express = require('express');
+// const cors = require('cors');
+// const app = express();
+//
+// const corsOptions = {
+//    origin: 'http://localhost:9000',
+//    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//    allowedHeaders: ['Content-Type'],
+//    credentials: true
+// };
+//
+// app.use(cors(corsOptions));
+//
+// // Handle preflight requests
+// app.options('*', cors(corsOptions));
+//
+// app.use(express.json());
+//
+// app.get('/product', (req, res) => {
+//    res.json({ message: 'Hello, this is your product endpoint!' });
+// });
+//
+// app.listen(8889, () => {
+//    console.log('Server is running on port 8889');
+// });
 
 function App() {
 
