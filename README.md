@@ -29,11 +29,13 @@ docker-compose -p kcj stop
 docker-compose -p kcj start
 
 # Deactivate all services (if necessary)
-docker-compose -p ems down
+docker-compose -p kcj down
 ```
 
 ```
 fnm env --use-on-cd | Out-String | Invoke-Expression
 
 npm run dev
+
+npm run dev -- --host 0.0.0.0
 ```

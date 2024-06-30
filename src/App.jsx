@@ -4,37 +4,15 @@ import HeaderComponent from './components/HeaderComponent';
 import ListProductComponent from './components/ListProductComponent';
 import ListRestaurantsComponent from './components/ListRestaurantsComponent';
 import ListRestaurantProductsComponent from './components/ListRestaurantProductsComponent';
-import ReviewComponent from './components/ReviewComponent';
+import ReviewComponent from './components/reviews/ReviewComponent.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginComponent from './components/LoginComponent';
-// const express = require('express');
-// const cors = require('cors');
-// const app = express();
-//
-// const corsOptions = {
-//    origin: 'http://localhost:9000',
-//    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//    allowedHeaders: ['Content-Type'],
-//    credentials: true
-// };
-//
-// app.use(cors(corsOptions));
-//
-// // Handle preflight requests
-// app.options('*', cors(corsOptions));
-//
-// app.use(express.json());
-//
-// app.get('/product', (req, res) => {
-//    res.json({ message: 'Hello, this is your product endpoint!' });
-// });
-//
-// app.listen(8889, () => {
-//    console.log('Server is running on port 8889');
-// });
+import MyPosts from "./components/MyPosts/MyPosts.jsx";
+import Post from "./components/MyPosts/Post/Post.jsx";
 
-function App() {
 
+
+const App = (props) => {
   return (
     <>
       <BrowserRouter>
@@ -42,7 +20,12 @@ function App() {
             <Routes>
 
               {/* // http://localhost:9000 */}
-              <Route path='/' element = { <ListProductComponent /> }></Route>
+              <Route path = '/'
+							element = { <MyPosts
+								profilePage={props.state.profilePage}
+								newPostText={props.state.profilePage.newPostText}
+								posts={props.state.profilePage.posts}
+								dispatch={props.dispatch} /> }></Route>
 
               {/* // http://localhost:9000/product */}
               <Route path='/product' element = { <ListProductComponent /> }></Route>
@@ -54,7 +37,13 @@ function App() {
               <Route path='/restaurant/:id' element = { <ListRestaurantProductsComponent /> } />
 
               {/* // http://localhost:9000/add-review */}
-              <Route path='/add-review' element = { <ReviewComponent /> }></Route>
+              <Route path='/add-review'
+							element = { <ReviewComponent
+								reviews={props.state.reviews}
+								newReviewComment={props.state.profilePage.newReviewComment}
+								newReviewRating={props.state.profilePage.newReviewRating}
+								restaurantId={props.state.profilePage.restaurantId}
+								dispatch={props.dispatch} /> }></Route>
 
               <Route path='/login' element={ <LoginComponent /> } />
             </Routes>

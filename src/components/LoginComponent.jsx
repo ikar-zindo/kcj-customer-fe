@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {jwtService, logoutService} from "../services/JwtService.js";
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [tokens, setTokens] = useState(null);
@@ -31,19 +31,14 @@ const LoginComponent = () => {
 	};
 
 	return (
-		<div className="App">
-
 			<div className="modal modal-sheet position-static d-block bg-body-tertiary p-4 py-md-5"
 				  tabIndex="-1"
 				  role="dialog"
 				  id="modalSignin">
 				<div className="modal-dialog" role="document">
 					<div className="modal-content rounded-4 shadow">
-						<div className="modal-header p-5 pb-4 border-bottom-0">
-							<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
 
-						<div className="modal-body p-5 pt-0">
+						<div className="modal-body p-5">
 							<form className="" onSubmit={handleLogin}>
 								<div className="form-floating mb-3">
 
@@ -72,31 +67,8 @@ const LoginComponent = () => {
 							<button onClick={handleLogout}
 									  className="w-100 mb-2 btn btn-lg rounded-3 btn-dark text-shojumaru-regular"
 									  type="submit">Logout</button>
-
-							{tokens && (
-								<div id="tokenDisplay">
-									<p>Access Token:</p>
-									<div className='w-100'>
-										<p className="text-break" style={{fontSize: '10px'}}>{tokens.accessToken}</p>
-									</div>
-									<p className='mx-2'>Access Token Expiry: {tokens.accessTokenExpiry}</p>
-									<p>Refresh Token:</p>
-									<div className='w-100'>
-										<p className="text-break" style={{fontSize: '9px'}}>{tokens.refreshToken}</p>
-									</div>
-									<p className='mx-2'>Refresh Token Expiry: {tokens.refreshTokenExpire}</p>
-								</div>
-							)}
-
-							{error && (
-								<div id="tokenDisplay">
-									<p>Error: {error}</p>
-								</div>
-							)}
-
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	);

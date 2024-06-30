@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { listProducts } from '../services/ProductService';
 
-const ListProductComponent = () => {
+const ListProductComponent = (props) => {
 
    const [products, setProducts] = useState([]);
 

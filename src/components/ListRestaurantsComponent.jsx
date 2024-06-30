@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {getRestaurantById, getRestaurants} from '../services/RestaurantService';
 import {Link, useNavigate} from 'react-router-dom';
 
-const ListRestaurantsComponent = () => {
+const ListRestaurantsComponent = (props) => {
 
 	const [restaurants, setRestaurants] = useState([])
 	const [error, setError] = useState(null);

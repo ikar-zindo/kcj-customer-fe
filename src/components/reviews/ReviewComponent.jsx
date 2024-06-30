@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import * as ReviewService from "../services/ReviewService.js";
+import * as ReviewService from "../../services/ReviewService.js";
 import {useNavigate} from "react-router-dom";
-import {getRestaurantById} from "../services/RestaurantService.js";
-import {getReviewsByRestaurantId} from "../services/ReviewService.js";
+import {getRestaurantById} from "../../services/RestaurantService.js";
+import {getReviewsByRestaurantId} from "../../services/ReviewService.js";
+import ReviewElement from "./ReviewElement.jsx";
 
-const ReviewComponent = () => {
+const ReviewComponent = (props) => {
 	const restaurantId = localStorage.getItem('restaurantId');
 	const [rating, setRating] = useState('');
 	const [comment, setComment] = useState('');
@@ -14,8 +15,7 @@ const ReviewComponent = () => {
 	useEffect(() => {
 		const fetchRestaurantProducts = async () => {
 			try {
-				const response = await getRestaurantById(restaurantId);
-				setReviews(response.data.reviews);
+				await getReviewsByRestaurantId(restaurantId);
 			} catch (error) {
 				console.error('Error fetching reviews products:', error);
 				setError(error.message || 'Failed to fetch restaurant reviews.');
@@ -25,11 +25,10 @@ const ReviewComponent = () => {
 		fetchRestaurantProducts()
 	}, []);
 
-
 	const saveReview = async (e) => {
 		e.preventDefault();
 
-		const reviewDto = { comment, rating };
+		const reviewDto = {comment, rating};
 		try {
 			await ReviewService.saveReview(restaurantId, reviewDto);
 			setComment('');
@@ -48,11 +47,37 @@ const ReviewComponent = () => {
 		} catch (error) {
 			console.error('Error fetching reviews:', error);
 		}
+
+
 	};
 
 	// useEffect(() => { // TODO: реализовать через state
 	// 	getReviewsByRestaurantId(restaurantId);
 	// }, [restaurantId]);
+
+	// ===========  state  =====================================================================
+
+	let reviewElements =
+		props.reviews.map(review => <ReviewElement review={review}/>)
+	;
+
+	let newReviewCommentRef = React.createRef();
+	let newReviewRatingRef = React.createRef();
+
+	let makeNewReview = () => {
+		props.dispatch({ type: 'ADD-REVIEW' });
+	}
+
+	let onReviewCommentChange = () => {
+		let newComment = newReviewCommentRef.current.value;
+		props.dispatch({ type: 'UPDATE-NEW-REVIEW-COMMENT', newComment: newComment});
+	};
+
+	let onReviewRatingChange = () => {
+		debugger;
+		let newRating = newReviewRatingRef.current.value;
+		props.dispatch({ type: 'UPDATE-NEW-REVIEW-RATING', newRating: newRating});
+	};
 
 	return (
 		<div className='container'>
@@ -62,7 +87,6 @@ const ReviewComponent = () => {
 					<h2 className='text-center'>Add review</h2>
 
 					<div className='cart-body'>
-
 						<form>
 							<div className='form-group mb-2'>
 								<label className='form-label'>Rating:</label>
@@ -96,6 +120,33 @@ const ReviewComponent = () => {
 				</div>
 			</div>
 
+			<div>
+				<div>
+					<textarea
+						onChange={onReviewCommentChange}
+						ref={newReviewCommentRef}
+						value={props.newReviewComment}
+						placeholder="Enter your comment"
+					/>
+				</div>
+				<div>
+					<input
+						type="number"
+						onChange={onReviewRatingChange}
+						ref={newReviewRatingRef}
+						value={props.newReviewRating || ''}
+						placeholder="Enter rating"
+					/>
+				</div>
+				<div>
+					<button className='btn btn-success mb-2' onClick={makeNewReview}>Add comment</button>
+				</div>
+			</div>
+
+			<div>
+				{reviewElements}
+			</div>
+
 			{reviews ? (
 				<table className="table table-striped table-bordered">
 					<thead>
@@ -115,13 +166,6 @@ const ReviewComponent = () => {
 							<td>{review.comment}</td>
 							<td>{review.customer.firstName}</td>
 							<td>{review.customer.lastName}</td>
-							{/*<td>*/}
-							{/*	<button className="btn btn-info" onClick={() => updateEmployee(employee.id)}>Update</button>*/}
-
-							{/*	<button className="btn btn-danger" onClick={() => removeEmployee(employee.id)}*/}
-							{/*			  style={{marginLeft: '10px'}}*/}
-							{/*	>Delete</button>*/}
-							{/*</td>*/}
 						</tr>
 					))}
 					</tbody>

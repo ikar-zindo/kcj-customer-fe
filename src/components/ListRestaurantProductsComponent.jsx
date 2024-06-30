@@ -3,7 +3,7 @@ import {getRestaurantById} from '../services/RestaurantService';
 import {navigateToAddReview} from '../services/ReviewService';
 import {useNavigate} from 'react-router-dom'
 
-const ListRestaurantProductsComponent = () => {
+const ListRestaurantProductsComponent = (props) => {
 
 	const restaurantId = localStorage.getItem('restaurantId')
 	const [error, setError] = useState(null);
