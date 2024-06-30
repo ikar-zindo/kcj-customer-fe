@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {getRestaurantById} from '../services/RestaurantService';
-import {navigateToAddReview} from '../services/ReviewService';
+import {getRestaurantById} from '../../services/RestaurantService';
+import {navigateToAddReview} from '../../services/ReviewService';
 import {useNavigate} from 'react-router-dom'
 
 const ListRestaurantProductsComponent = (props) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {getRestaurants} from '../services/RestaurantService';
+import {getRestaurants} from '../../services/RestaurantService';
 
 const HeaderComponent = (props) => {
 

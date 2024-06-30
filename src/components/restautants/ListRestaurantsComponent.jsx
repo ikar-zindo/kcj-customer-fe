@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {getRestaurantById, getRestaurants} from '../services/RestaurantService';
+import {getRestaurantById, getRestaurants} from '../../services/RestaurantService';
 import {Link, useNavigate} from 'react-router-dom';
 
 const ListRestaurantsComponent = (props) => {

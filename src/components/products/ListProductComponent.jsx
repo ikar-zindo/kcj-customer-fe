@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { listProducts } from '../services/ProductService';
+import { listProducts } from '../../services/ProductService';
 
 const ListProductComponent = (props) => {
 

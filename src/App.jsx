@@ -1,9 +1,9 @@
 import './App.css';
-import FooterComponent from './components/FooterComponent';
-import HeaderComponent from './components/HeaderComponent';
-import ListProductComponent from './components/ListProductComponent';
-import ListRestaurantsComponent from './components/ListRestaurantsComponent';
-import ListRestaurantProductsComponent from './components/ListRestaurantProductsComponent';
+import FooterComponent from './components/fragments/FooterComponent';
+import HeaderComponent from './components/fragments/HeaderComponent';
+import ListProductComponent from './components/products/ListProductComponent';
+import ListRestaurantsComponent from './components/restautants/ListRestaurantsComponent';
+import ListRestaurantProductsComponent from './components/restautants/ListRestaurantProductsComponent';
 import ReviewComponent from './components/reviews/ReviewComponent.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginComponent from './components/LoginComponent';

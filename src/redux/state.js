@@ -106,7 +106,6 @@ let store = {
 	},
 
 	dispatch(action) {
-		debugger;
 		// { type: 'ADD-POST' }
 		if (action.type === 'ADD-POST') {
 			let newPost = {
