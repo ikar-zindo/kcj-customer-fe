@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import * as ReviewService from "../../services/ReviewService.js";
-import {useNavigate} from "react-router-dom";
-import {getRestaurantById} from "../../services/RestaurantService.js";
-import {getReviewsByRestaurantId} from "../../services/ReviewService.js";
 import ReviewElement from "./ReviewElement.jsx";
+import {addReview, updateNewReviewComment, updateNewReviewRating} from "../../redux/state.js";
 
 const ReviewComponent = (props) => {
 	const restaurantId = localStorage.getItem('restaurantId');
 	const [rating, setRating] = useState('');
 	const [comment, setComment] = useState('');
 	const [error, setError] = useState(null);
-	const [reviews, setReviews] = useState([])
+	const [reviews, setReviews] = useState([]);
 
 	useEffect(() => {
 		const fetchRestaurantProducts = async () => {
@@ -47,8 +45,6 @@ const ReviewComponent = (props) => {
 		} catch (error) {
 			console.error('Error fetching reviews:', error);
 		}
-
-
 	};
 
 	// useEffect(() => { // TODO: реализовать через state
@@ -65,18 +61,20 @@ const ReviewComponent = (props) => {
 	let newReviewRatingRef = React.createRef();
 
 	let makeNewReview = () => {
-		props.dispatch({ type: 'ADD-REVIEW' });
+		let action = addReview();
+		props.dispatch(action);
 	}
 
 	let onReviewCommentChange = () => {
 		let newComment = newReviewCommentRef.current.value;
-		props.dispatch({ type: 'UPDATE-NEW-REVIEW-COMMENT', newComment: newComment});
+		let action = updateNewReviewComment(newComment);
+		props.dispatch(action);
 	};
 
 	let onReviewRatingChange = () => {
-		debugger;
 		let newRating = newReviewRatingRef.current.value;
-		props.dispatch({ type: 'UPDATE-NEW-REVIEW-RATING', newRating: newRating});
+		let action = updateNewReviewRating(newRating);
+		props.dispatch(action);
 	};
 
 	return (

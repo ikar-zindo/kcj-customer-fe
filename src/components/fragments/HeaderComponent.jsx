@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import {getRestaurants} from '../../services/RestaurantService';
 
 const HeaderComponent = (props) => {
@@ -32,14 +32,15 @@ const HeaderComponent = (props) => {
 				</div>
 
 				<ul className="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-					<li><a href="/" className="nav-link px-2 link-secondary">Home</a></li>
-					<li><a href="/product" className="nav-link px-2 active">Menu</a></li>
-					<li><a onClick={handleToRestaurantClick} href="/restaurant" className="nav-link px-2">Restaurants</a></li>
+					<li><NavLink to="/" className="nav-link px-2">Home</NavLink></li>
+					<li><NavLink to="/product" className="nav-link px-2">Menu</NavLink></li>
+					<li><NavLink to="/restaurant" className="nav-link px-2">Restaurants</NavLink></li>
+					<li><NavLink to="/cart" className="nav-link px-2">Cart</NavLink></li>
 				</ul>
 
 				<div className="text-end">
-					<Link to="/login" className="btn btn-outline-primary me-2">Login</Link>
-					<Link to="/registration" type="button" className="btn btn-primary">Registration</Link>
+					<NavLink to="/login" className="btn btn-outline-success me-2">Login</NavLink>
+					<NavLink to="/registration" type="button" className="btn btn-outline-success">Registration</NavLink>
 				</div>
 			</header>
 		</div>

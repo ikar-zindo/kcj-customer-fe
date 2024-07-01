@@ -37,5 +37,5 @@ fnm env --use-on-cd | Out-String | Invoke-Expression
 
 npm run dev
 
-npm run dev -- --host 0.0.0.0
+npm run dev -- --host 192.168.178.25
 ```

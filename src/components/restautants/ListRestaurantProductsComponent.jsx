@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {getRestaurantById} from '../../services/RestaurantService';
-import {navigateToAddReview} from '../../services/ReviewService';
-import {useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
+import * as CartService from "../../services/CartService.js";
+import * as RestaurantService from "../../services/RestaurantService.js";
 
 const ListRestaurantProductsComponent = (props) => {
 
@@ -15,9 +16,10 @@ const ListRestaurantProductsComponent = (props) => {
 	useEffect(() => {
 		const fetchRestaurantProducts = async () => {
 			try {
-				const response = await getRestaurantById(restaurantId);
-				setRestaurant(response.data);
-				setProducts(response.data.products);
+				await Promise.all([
+					getRestaurantById(restaurantId),
+
+				]);
 			} catch (error) {
 				console.error('Error fetching restaurant products:', error);
 				setError(error.message || 'Failed to fetch restaurant products.');
@@ -27,9 +29,31 @@ const ListRestaurantProductsComponent = (props) => {
 		fetchRestaurantProducts()
 	}, []);
 
-	const handleAddReview = () => {
-		navigateToAddReview(navigate)
+
+	const getRestaurantById = async () => {
+		try {
+			const response = await RestaurantService.getRestaurantById(restaurantId);
+			setRestaurant(response.data);
+			setProducts(response.data.products);
+		} catch (error) {
+			console.error('Error fetching restaurant products:', error);
+			setError(error.message || 'Failed to fetch restaurant products.');
+		}
 	}
+
+
+
+	const handleAddProductToCart  = async (productId) => {
+		try {
+			const response = await CartService.addProductToCart(productId);
+			console.log(response)
+			console.log(response.data)
+			console.log(response.statusText)
+		} catch (error) {
+			setError(error.message || 'Failed to fetch cart products.');
+		}
+	}
+
 
 	return (
 		<main>
@@ -45,7 +69,7 @@ const ListRestaurantProductsComponent = (props) => {
 						)}
 					</div>
 					<div className='col-md-6'>
-						<button className='btn btn-primary mb-2 mx-5' onClick={handleAddReview}>Add review</button>
+						<NavLink to="/add-review" className='btn btn-primary mb-2 mx-5'>Add review</NavLink>
 					</div>
 				</div>
 			</div>
@@ -77,10 +101,8 @@ const ListRestaurantProductsComponent = (props) => {
 										</div>
 										<div className="d-flex justify-content-between align-items-center">
 											<div className="btn-group">
-												<form
-													th:action="'/cart/' + |${product.restaurantDto.id}| + '/' + |${product.id}| + '/add'"
-													th:method="PUT">
 													<button
+														onClick={() => handleAddProductToCart(product.id)}
 														type="submit"
 														className="mt-2 btn btn-success text-shojumaru-regular btn-add-to-cart">
 														<svg xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +118,6 @@ const ListRestaurantProductsComponent = (props) => {
 														</svg>
 														Add to cart
 													</button>
-												</form>
 											</div>
 
 											<div className="text-end">

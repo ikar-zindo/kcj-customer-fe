@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {getRestaurantById, getRestaurants} from '../../services/RestaurantService';
-import {Link, useNavigate} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 
 const ListRestaurantsComponent = (props) => {
 
@@ -55,13 +55,13 @@ const ListRestaurantsComponent = (props) => {
 
 											</div>
 											<div>
-												<Link
+												<NavLink
 													className="text-shojumaru-regular"
 													to={`/restaurant/${restaurant.id}`}
 													onClick={() => localStorage.setItem('restaurantId', restaurant.id)}
 												>
 													<h3>{restaurant.name}</h3>
-												</Link>
+												</NavLink>
 												<p>{restaurant.description}</p>
 											</div>
 										</div>

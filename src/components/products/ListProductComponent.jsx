@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { listProducts } from '../../services/ProductService';
+import * as CartService from "../../services/CartService.js";
 
 const ListProductComponent = (props) => {
 
    const [products, setProducts] = useState([]);
+   const [error, setError] = useState(null);
 
    useEffect(() => {
       listProducts().then((response) => {
@@ -12,6 +14,18 @@ const ListProductComponent = (props) => {
          console.error(error)
       )
    }, []);
+
+
+   const handleAddProductToCart  = async (productId) => {
+      try {
+         const response = await CartService.addProductToCart(productId);
+         console.log(response)
+         console.log(response.data)
+         console.log(response.statusText)
+      } catch (error) {
+         setError(error.message || 'Failed to fetch cart products.');
+      }
+   }
 
    return (
    <main>
@@ -41,10 +55,8 @@ const ListProductComponent = (props) => {
                            </div>
                            <div className="d-flex justify-content-between align-items-center">
                               <div className="btn-group">
-                                 <form
-                                    th:action="'/cart/' + |${product.restaurantDto.id}| + '/' + |${product.id}| + '/add'"
-                                    th:method="PUT">
                                     <button
+                                       onClick={() => handleAddProductToCart(product.id)}
                                        type="submit"
                                        className="mt-2 btn btn-success text-shojumaru-regular btn-add-to-cart">
                                        <svg xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +70,6 @@ const ListProductComponent = (props) => {
                                        </svg>
                                        Add to cart
                                     </button>
-                                 </form>
                               </div>
 
                               <div className="text-end">
