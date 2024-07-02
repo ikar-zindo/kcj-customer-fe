@@ -38,6 +38,15 @@ const ListRestaurantsComponent = (props) => {
 		}
 	}
 
+	// ==========  state  ======================================
+
+	let updateRestaurantIdRef = React.createRef();
+	const [selectedRestaurantId, setSelectedRestaurantId] = useState(null);
+
+	const handleRestaurantClick = (id) => {
+		setSelectedRestaurantId(id);
+	};
+
 	return (
 		<div className="container">
 			<main>
@@ -58,7 +67,10 @@ const ListRestaurantsComponent = (props) => {
 												<NavLink
 													className="text-shojumaru-regular"
 													to={`/restaurant/${restaurant.id}`}
-													onClick={() => localStorage.setItem('restaurantId', restaurant.id)}
+													onClick={() => {
+														handleRestaurantClick(restaurant.id)
+														localStorage.setItem('restaurantId', restaurant.id)
+													}}
 												>
 													<h3>{restaurant.name}</h3>
 												</NavLink>

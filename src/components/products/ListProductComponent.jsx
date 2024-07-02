@@ -4,6 +4,7 @@ import * as CartService from "../../services/CartService.js";
 
 const ListProductComponent = (props) => {
 
+   const [cartProduct, setCartProduct] = useState(null)
    const [products, setProducts] = useState([]);
    const [error, setError] = useState(null);
 
@@ -19,9 +20,7 @@ const ListProductComponent = (props) => {
    const handleAddProductToCart  = async (productId) => {
       try {
          const response = await CartService.addProductToCart(productId);
-         console.log(response)
-         console.log(response.data)
-         console.log(response.statusText)
+         setCartProduct(response.data)
       } catch (error) {
          setError(error.message || 'Failed to fetch cart products.');
       }

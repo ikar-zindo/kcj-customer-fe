@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import * as ReviewService from "../../services/ReviewService.js";
 import ReviewElement from "./ReviewElement.jsx";
-import {addReview, updateNewReviewComment, updateNewReviewRating} from "../../redux/state.js";
+import {addReview, updateNewReviewCommentCreator, updateNewReviewRatingCreator} from "../../redux/reviews-reducer.js";
 
 const ReviewComponent = (props) => {
 	const restaurantId = localStorage.getItem('restaurantId');
@@ -67,13 +67,13 @@ const ReviewComponent = (props) => {
 
 	let onReviewCommentChange = () => {
 		let newComment = newReviewCommentRef.current.value;
-		let action = updateNewReviewComment(newComment);
+		let action = updateNewReviewCommentCreator(newComment);
 		props.dispatch(action);
 	};
 
 	let onReviewRatingChange = () => {
 		let newRating = newReviewRatingRef.current.value;
-		let action = updateNewReviewRating(newRating);
+		let action = updateNewReviewRatingCreator(newRating);
 		props.dispatch(action);
 	};
 

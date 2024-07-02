@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import * as CartService from "../../services/CartService.js";
-import {getCartProductsState} from "../../redux/state.js";
+import {getCartProductsState} from "../../redux/cart-reducer.js";
 
 
 const CartComponent = (props) => {
 
-	// let customerProps = props.customerData.info
+	// let customerProps = props.customerInfo.info
 	const [cartProducts, setCartProducts] = useState([]);
+	const [cartProductsState, setCartProductsState] = useState([]);
 	const [totalCart, setTotalCart] = useState(0);
 	const [cartSize, setCartSize] = useState(0);
 	const [error, setError] = useState(null);
@@ -18,7 +19,6 @@ const CartComponent = (props) => {
 	const [address, setAddress] = useState('')
 	const [postalCode, setPostalCode] = useState('')
 
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -28,6 +28,7 @@ const CartComponent = (props) => {
 					// setCustomer(customerProps)
 					getTotalCartById(),
 					getCartProductsSize(),
+
 				]);
 			} catch (error) {
 				setError(error.message || 'Failed to fetch cart products.');
@@ -45,9 +46,6 @@ const CartComponent = (props) => {
 		try {
 			const response = await CartService.getCartProducts();
 			setCartProducts(response.data);
-
-
-			// console.log(cartProductsState)
 		} catch (error) {
 			setError(error.message || 'Failed to fetch cart products.');
 		}

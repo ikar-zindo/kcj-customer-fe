@@ -4,6 +4,7 @@ const accessToken = localStorage.getItem("accessToken");
 const REST_API_RESTAURANT = 'http://localhost:8889/restaurant';
 
 export const saveReview = (restaurantId, reviewDto) => {
+	// const accessToken = store.getState().customerData.jwtTokens.accessToken
 	try {
 		return axios.post(`${REST_API_RESTAURANT}/add-review`,
 			reviewDto,
@@ -22,6 +23,7 @@ export const saveReview = (restaurantId, reviewDto) => {
 };
 
 export const getReviewsByRestaurantId = (restaurantId) => {
+	// const accessToken = store.getState().customerData.jwtTokens.accessToken
 	return axios.get(`${REST_API_RESTAURANT}/${restaurantId}/reviews`, {
 		headers: {
 			'Authorization': 'Bearer ' + accessToken

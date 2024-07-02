@@ -1,7 +1,9 @@
 import axios from "axios";
+import {updateJwtTokens} from "../redux/jwt-tokens-reducer.js";
 
 const API_BASE_URL = 'http://localhost:8889';
 const refreshToken = localStorage.getItem('refreshToken');
+// const jwtTokens = store.getState().customerData.jwtTokens;
 
 export const jwtService = async (username, password) => {
 	const response = await axios.post(
@@ -17,11 +19,13 @@ export const jwtService = async (username, password) => {
 	if (response.status === 200) {
 		const {accessToken, accessTokenExpiry, refreshToken, refreshTokenExpire} = response.data;
 
+		store.dispatch(updateJwtTokens(response.data))
 		// Сохраняем токены в localStorage
 		localStorage.setItem('accessToken', accessToken);
 		localStorage.setItem('accessTokenExpiry', accessTokenExpiry);
 		localStorage.setItem('refreshToken', refreshToken);
 		localStorage.setItem('refreshTokenExpire', refreshTokenExpire);
+		// console.log(jwtTokens)
 
 		console.log('Login successful');
 	} else {

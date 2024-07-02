@@ -11,6 +11,7 @@ import LoginComponent from './components/LoginComponent';
 import MyPosts from "./components/MyPosts/MyPosts.jsx";
 import Post from "./components/MyPosts/Post/Post.jsx";
 import CartComponent from "./components/cart/CartComponent.jsx";
+import MyPostsContainer from "./components/MyPosts/MyPostsContainer.jsx";
 
 
 
@@ -24,7 +25,7 @@ const App = (props) => {
 					{/* // http://localhost:9000/cart */}
 					<Route path='/cart'
 							 element = { <CartComponent
-								 customerData={props.state.customerData}
+								 customerInfo={props.state.customerInfo}
 								 dispatch={props.dispatch} /> }></Route>
 
               {/* // http://localhost:9000 */}
@@ -47,9 +48,9 @@ const App = (props) => {
               {/* // http://localhost:9000/add-review */}
               <Route path='/add-review'
 							element = { <ReviewComponent
-								reviews={props.state.reviews}
-								newReviewComment={props.state.profilePage.newReviewComment}
-								newReviewRating={props.state.profilePage.newReviewRating}
+								reviews={props.state.reviewPage.reviews}
+								newReviewComment={props.state.reviewPage.newReviewComment}
+								newReviewRating={props.state.reviewPage.newReviewRating}
 								restaurantId={props.state.profilePage.restaurantId}
 								dispatch={props.dispatch} /> }></Route>
 

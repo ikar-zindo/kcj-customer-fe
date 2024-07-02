@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 9000
 
-CMD ["npm", "run", "dev", "--", "--host", "192.168.178.25"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
