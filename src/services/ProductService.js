@@ -1,6 +1,7 @@
 import axios from "axios";
+import InstanceAPIWithBearer from "./API.js";
 
-const REST_API_PRODUCT = 'http://localhost:8889/product';
+const instance = axios.create(InstanceAPIWithBearer);
 
-export const listProducts = () => axios.get(REST_API_PRODUCT);
-export const getProduct = () => axios.get(`${REST_API_PRODUCT}/${id}`);
+export const listProducts = () => instance.get('/product');
+export const getProduct = () => instance.get(`/product/${id}`);

@@ -1,13 +1,14 @@
 import axios from "axios";
-import {updateJwtTokens} from "../redux/jwt-tokens-reducer.js";
+import InstanceAPIWithBearer from "./API.js";
 
-const API_BASE_URL = 'http://localhost:8889';
-const refreshToken = localStorage.getItem('refreshToken');
-// const jwtTokens = store.getState().customerData.jwtTokens;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// TODO: переделать с использованием instance
+const instance = axios.create(InstanceAPIWithBearer);
 
 export const jwtService = async (username, password) => {
 	const response = await axios.post(
-		`${API_BASE_URL}/jwt/tokens`,
+		`${BASE_URL}/jwt/tokens`,
 		{},
 		{
 			headers: {
@@ -19,13 +20,11 @@ export const jwtService = async (username, password) => {
 	if (response.status === 200) {
 		const {accessToken, accessTokenExpiry, refreshToken, refreshTokenExpire} = response.data;
 
-		store.dispatch(updateJwtTokens(response.data))
 		// Сохраняем токены в localStorage
 		localStorage.setItem('accessToken', accessToken);
 		localStorage.setItem('accessTokenExpiry', accessTokenExpiry);
 		localStorage.setItem('refreshToken', refreshToken);
 		localStorage.setItem('refreshTokenExpire', refreshTokenExpire);
-		// console.log(jwtTokens)
 
 		console.log('Login successful');
 	} else {
@@ -38,7 +37,7 @@ export const jwtService = async (username, password) => {
 export const logoutService = async () => {
 	const refreshToken = localStorage.getItem('refreshToken');
 	const response = await axios.post(
-		`${API_BASE_URL}/jwt/logout`,
+		`${BASE_URL}/jwt/logout`,
 		{},
 		{
 			headers: {
@@ -65,7 +64,7 @@ export const logoutService = async () => {
 export const refreshTokenService = async () => {
 	const refreshToken = localStorage.getItem('refreshToken');
 	const response = await axios.post(
-		`${API_BASE_URL}/jwt/refresh`,
+		`${BASE_URL}/jwt/refresh`,
 		{},
 		{
 			headers: {

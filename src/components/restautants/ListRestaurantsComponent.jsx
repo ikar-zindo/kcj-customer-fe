@@ -13,7 +13,6 @@ const ListRestaurantsComponent = (props) => {
 			try {
 				const response = await getRestaurants();
 				setRestaurants(response.data);
-				// console.log(response);
 			} catch (error) {
 				console.error('Error fetching restaurants:', error);
 				setError(error.message || 'Failed to fetch restaurants.');
@@ -24,7 +23,7 @@ const ListRestaurantsComponent = (props) => {
 	}, []);
 
 	if (error) {
-		return <div>Error: {error}</div>;
+		return <p className="text-shojumaru-regular m-2 text-danger">Error: {error}</p>;
 	}
 
 	const handleToRestaurantClick = async (e) => {
@@ -71,7 +70,7 @@ const ListRestaurantsComponent = (props) => {
 														handleRestaurantClick(restaurant.id)
 														localStorage.setItem('restaurantId', restaurant.id)
 													}}
-												>
+										      		>
 													<h3>{restaurant.name}</h3>
 												</NavLink>
 												<p>{restaurant.description}</p>

@@ -1,31 +1,16 @@
 import axios from "axios";
+import InstanceAPIWithBearer from "./API.js";
 
-const accessToken = localStorage.getItem("accessToken");
-const REST_API_RESTAURANT = 'http://localhost:8889/restaurant';
+const instance = axios.create(InstanceAPIWithBearer);
 
 export const getRestaurants = () => {
-	// const accessToken = store.getState().customerData.jwtTokens.accessToken;
-	return axios.get(`${REST_API_RESTAURANT}`, {
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		}
-	});
+	return instance.get('/restaurant');
 }
 
 export const getRestaurantById = (restaurantId) => {
-	// const accessToken = store.getState().customerData.jwtTokens.accessToken;
-	return axios.get(`${REST_API_RESTAURANT}/${restaurantId}`, {
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		}
-	});
+	return instance.get(`/restaurant/${restaurantId}`);
 }
 
 export const getRestaurantProducts = (restaurantId) => {
-	// const accessToken = store.getState().customerData.jwtTokens.accessToken;
-	return axios.get(`${REST_API_RESTAURANT}/${restaurantId}/products`, {
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		}
-	});
+	return instance.get(`/restaurant/${restaurantId}/products`);
 }

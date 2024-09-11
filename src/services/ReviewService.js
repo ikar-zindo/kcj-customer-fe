@@ -1,18 +1,12 @@
 import axios from "axios";
+import InstanceAPIWithBearer from "./API.js";
 
-const accessToken = localStorage.getItem("accessToken");
-const REST_API_RESTAURANT = 'http://localhost:8889/restaurant';
+const instance = axios.create(InstanceAPIWithBearer);
 
 export const saveReview = (restaurantId, reviewDto) => {
-	// const accessToken = store.getState().customerData.jwtTokens.accessToken
 	try {
-		return axios.post(`${REST_API_RESTAURANT}/add-review`,
-			reviewDto,
+		return instance.post(`/restaurant/add-review`, reviewDto,
 			{
-				headers: {
-					'Authorization': 'Bearer ' + accessToken,
-					'Content-Type': 'application/json'
-				},
 				params: {
 					restaurantId: restaurantId
 				}
@@ -23,12 +17,7 @@ export const saveReview = (restaurantId, reviewDto) => {
 };
 
 export const getReviewsByRestaurantId = (restaurantId) => {
-	// const accessToken = store.getState().customerData.jwtTokens.accessToken
-	return axios.get(`${REST_API_RESTAURANT}/${restaurantId}/reviews`, {
-		headers: {
-			'Authorization': 'Bearer ' + accessToken
-		}
-	});
+	return instance.get(`/restaurant/${restaurantId}/reviews`);
 }
 
 export const navigateToAddReview = (navigate) => {

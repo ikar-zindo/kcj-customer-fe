@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {getRestaurantById} from '../../services/RestaurantService';
-import {NavLink, useNavigate} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import * as CartService from "../../services/CartService.js";
 import * as RestaurantService from "../../services/RestaurantService.js";
 
@@ -11,7 +11,6 @@ const ListRestaurantProductsComponent = (props) => {
 	const [products, setProducts] = useState([])
 	const [restaurant, setRestaurant] = useState(null)
 
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchRestaurantProducts = async () => {
@@ -29,6 +28,9 @@ const ListRestaurantProductsComponent = (props) => {
 		fetchRestaurantProducts()
 	}, []);
 
+	if (error) {
+		return <p className="text-shojumaru-regular m-2 text-danger">Error: {error}</p>;
+	}
 
 	const getRestaurantById = async () => {
 		try {

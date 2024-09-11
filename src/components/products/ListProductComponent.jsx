@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { listProducts } from '../../services/ProductService';
 import * as CartService from "../../services/CartService.js";
 
-const ListProductComponent = (props) => {
+const ListProductComponent = () => {
 
    const [cartProduct, setCartProduct] = useState(null)
    const [products, setProducts] = useState([]);
@@ -15,7 +15,6 @@ const ListProductComponent = (props) => {
          console.error(error)
       )
    }, []);
-
 
    const handleAddProductToCart  = async (productId) => {
       try {
