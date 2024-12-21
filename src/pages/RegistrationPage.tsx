@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useAppSelector} from "../hooks/hooks";
 import {selectAuth} from "../selectors/auth-selectors";
-import RegistrationForm from "../components/common/RegistrationForm.tsx";
+import RegistrationForm from "../components/forms/RegistrationForm.tsx";
 
 const RegistrationPage: React.FC = React.memo(() => {
 	const auth = useAppSelector(selectAuth);

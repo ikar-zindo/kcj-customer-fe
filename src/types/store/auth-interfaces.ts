@@ -5,6 +5,5 @@ export interface AuthState {
 	customer: CustomerDto | null;
 	isAuth: boolean;
 	tokens: LoginDataResponse | null;
-	captchaUrl: string | null;
 	// TODO: imgUrl
 }

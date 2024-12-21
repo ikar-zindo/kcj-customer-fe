@@ -3,19 +3,19 @@ import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import {Alert} from "@mui/material";
 import {useAppDispatch} from "../../hooks/hooks";
-import {clearSnackbarError} from "../../store/app-slice";
+import {clearGlobalMessage} from "../../store/app-slice";
 
-interface SnackbarErrorProps {
-	snackbarError: string
+interface SnackbarMessageProps {
+	snackbarMessage: string
 }
 
-const SnackbarError: React.FC<SnackbarErrorProps> = ({snackbarError}) => {
+const SnackbarMessage: React.FC<SnackbarMessageProps> = ({snackbarMessage}) => {
 	const [isOpen, setIsOpen] = useState<boolean>(true);
 	const dispatch = useAppDispatch();
 
 	const handleClose = () => {
 		setIsOpen(false);
-		dispatch(clearSnackbarError());
+		dispatch(clearGlobalMessage());
 	};
 
 	return (
@@ -26,13 +26,13 @@ const SnackbarError: React.FC<SnackbarErrorProps> = ({snackbarError}) => {
 		          autoHideDuration={2000}
 		          sx={{bottom: {xs: 70, md: 20}}}>
 			<Alert onClose={handleClose}
-			       severity="error"
+			       severity="info"
 			       variant="filled"
 			       sx={{width: '100%'}}>
-				{snackbarError}
+				{snackbarMessage}
 			</Alert>
 		</Snackbar>
 	);
 }
 
-export default SnackbarError;
+export default SnackbarMessage;

@@ -1,21 +1,26 @@
 import React from "react";
-import MuiSwitch from "../components/mui/MuiSwitch";
-import {Box} from "@mui/material";
-import MuiRating from "../components/mui/MuiRating";
-import MuiAutocomplete from "../components/mui/MuiAutocomplete";
-import MuiLayout from "../components/mui/MuiLayout";
-import DarkSwitch from "../components/mui/DarkSwitch";
+import {Box, CircularProgress, Typography} from "@mui/material";
+import UpdateUserForm from "../components/forms/UpdateUserForm.tsx";
+import {useAppSelector} from "../hooks/hooks";
+import {selectCustomer} from "../selectors/auth-selectors";
 
-const HomePage: React.FC = React.memo(() => {
+const ProfilePage: React.FC = React.memo(() => {
+	const customer = useAppSelector(selectCustomer);
+
+	if (!customer) {
+		return (
+			<Box>
+				<Typography variant="h6">Loading customer data...</Typography>
+				<CircularProgress />
+			</Box>
+		);
+	}
+
 	return (
 		<Box>
-			<DarkSwitch/>
-			<MuiSwitch/>
-			<MuiRating/>
-			<MuiAutocomplete/>
-			<MuiLayout/>
+			<UpdateUserForm initialData={customer}/>
 		</Box>
 	);
 });
 
-export default HomePage;
+export default ProfilePage;

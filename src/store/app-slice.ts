@@ -1,13 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {me} from "./auth-slice";
 import {AppState, GlobalError} from "../types/store/app-interfaces";
-import {AppDispatch} from "./store.ts";
-import {ErrorAPI} from "../types/api/auth-types.ts";
+import {AppDispatch} from "./store";
+import {ErrorAPI} from "../types/api/auth-types";
 
 const initialState: AppState = {
 	initialized: true, // TODO: поменять на false
 	isMobileDevice: null,
 	globalError: null,
+	snackbarMessage: null,
 	snackbarError: null,
 }
 
@@ -29,6 +30,12 @@ const appSlice = createSlice({
 		},
 		clearSnackbarError: (state) => {  // Экшен для очистки ошибки
 			return {...state, snackbarError: null};
+		},
+		setGlobalMessage: (state, action: PayloadAction<string>) => {  // Экшен для установки глобальной ошибки
+			return {...state, globalMessage: action.payload};
+		},
+		clearGlobalMessage: (state) => {  // Экшен для очистки ошибки
+			return {...state, globalMessage: null};
 		},
 		setIsMobileDeviceAction: (state) => {
 			const userAgent = navigator.userAgent.toLowerCase();
@@ -60,5 +67,7 @@ export const {
 	setIsMobileDeviceAction,
 	setSnackbarError,
 	clearSnackbarError,
+	setGlobalMessage,
+	clearGlobalMessage,
 } = appSlice.actions;
 export default appSlice.reducer;

@@ -1,4 +1,4 @@
-import {RestaurantDto} from "../dtos.ts";
+import {RestaurantDto} from "../dtos";
 
 export interface RestaurantState {
 	restaurants: RestaurantDto[];

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {Box, Card, CardContent, CardMedia, Rating, Typography} from '@mui/material';
-import {RestaurantDto} from "../../types/dtos.ts";
-import {useAppDispatch} from "../../hooks/hooks.ts";
-import {fetchRestaurantRatingThunk} from "../../store/restaurants-slice.ts";
+import {RestaurantDto} from "../../types/dtos";
+import {useAppDispatch} from "../../hooks/hooks";
+import {fetchRestaurantRatingThunk} from "../../store/restaurants-slice";
 
 interface RestaurantCardProps {
 	restaurant: RestaurantDto;

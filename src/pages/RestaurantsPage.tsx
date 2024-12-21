@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {Container, Typography} from '@mui/material';
 import Grid from "@mui/material/Grid2";
-import RestaurantCard from "../components/common/RestaurantCard.tsx";
-import {useAppDispatch, useAppSelector} from "../hooks/hooks.ts";
-import {selectAllRestaurants} from "../selectors/restaurants-selectors.ts";
-import {requestRestaurantsThunk} from "../store/restaurants-slice.ts";
+import RestaurantCard from "../components/common/RestaurantCard";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
+import {selectAllRestaurants} from "../selectors/restaurants-selectors";
+import {requestRestaurantsThunk} from "../store/restaurants-slice";
 
 const RestaurantsPage: React.FC = React.memo(() => {
 	const restaurants = useAppSelector(selectAllRestaurants);

@@ -1,9 +1,7 @@
-import instanceAPI from "./instanceAPI";
 import {LoginDataRequest, LoginDataResponse} from "../types/api/auth-types";
 import {APIResponseType, CustomerResponseDto} from "../types/api/common-types";
 import axios from "axios";
-import {CustomerCreateDto, CustomerDto} from "../types/dtos.ts";
-
+import {CustomerCreateDto} from "../types/dtos";
 
 export const authAPI = {
 	async login(data: LoginDataRequest) {
@@ -27,10 +25,6 @@ export const authAPI = {
 					'Authorization': 'Bearer ' + refreshToken
 				}
 			});
-	},
-
-	me() {
-		return instanceAPI.get<CustomerDto>('customer');
 	},
 
 	async register(data: CustomerCreateDto) {

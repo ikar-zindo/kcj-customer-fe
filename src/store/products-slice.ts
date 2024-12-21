@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch} from "./store";
-import {ProductState} from "../types/store/products-interfaces.ts";
-import {productsAPI} from "../api/productsAPI.ts";
-import {ProductDto} from "../types/dtos.ts";
-import {setSnackbarError} from "./app-slice.ts";
-import {errorMessages} from "../utils/error-messages.ts";
+import {ProductState} from "../types/store/products-interfaces";
+import {productsAPI} from "../api/productsAPI";
+import {ProductDto} from "../types/dtos";
+import {setSnackbarError} from "./app-slice";
+import {errorMessages} from "../utils/error-messages";
 
 const initialState: ProductState = {
 	products: []

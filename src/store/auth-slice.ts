@@ -1,18 +1,19 @@
 import {authAPI} from "../api/authAPI";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {errorMessages} from "../utils/error-messages.ts";
+import {authErrors, errorMessages} from "../utils/error-messages";
 import {AppDispatch} from "./store";
 import {AuthState} from "../types/store/auth-interfaces";
 import {LoginDataRequest, LoginDataResponse} from "../types/api/auth-types";
-import {setGlobalError} from "./app-slice.ts";
+import {setGlobalError, setGlobalMessage, setSnackbarError} from "./app-slice";
 import axios from "axios";
-import {CustomerCreateDto, CustomerDto} from "../types/dtos.ts";
+import {CustomerCreateDto, CustomerDto, CustomerUpdateDto} from "../types/dtos";
+import {customerAPI} from "../api/customerAPI.ts";
+import {messages} from "../utils/messages.ts";
 
 const initialState: AuthState = {
 	customer: null,
 	isAuth: false,
 	tokens: null,
-	captchaUrl: null
 }
 
 const authSlice = createSlice({
@@ -30,17 +31,12 @@ const authSlice = createSlice({
 		logoutAction: (state) => {
 			return {...state, customer: null, isAuth: false}
 		},
-		setCaptchaUrl: (state, action: PayloadAction<string | null>) => {
-			if (action.payload) {
-				return {...state, captchaUrl: action.payload};
-			}
-		}
 	}
 });
 
 // ASYNCHRONOUS ACTIONS
 export const me = () => async (dispatch: AppDispatch) => {
-	const response = await authAPI.me()
+	const response = await customerAPI.me()
 
 	try {
 		if (response.status === 200) {
@@ -49,8 +45,14 @@ export const me = () => async (dispatch: AppDispatch) => {
 			return [errorMessages.UNAUTHORIZED_ACCESS];
 		}
 	} catch (error) {
-		console.error("Error during login", error);
-		return [errorMessages.SERVER_ERROR_OCCURRED]; // Ошибка на сервере
+		if (axios.isAxiosError(error)) {
+			dispatch(setGlobalError({
+				code: error.code || 'UNKNOWN_ERROR',
+				status: error.response?.status || 500,
+				message: error.message
+			}));
+		}
+		dispatch(setSnackbarError(authErrors.LOGIN_ERROR));
 	}
 };
 
@@ -66,9 +68,9 @@ export const login = (data: LoginDataRequest) =>
 				localStorage.setItem('refreshToken', refreshToken);
 				localStorage.setItem('refreshTokenExpire', refreshTokenExpire);
 
-				console.log('Login successful');
 				dispatch(setTokenAction(response.data))
 				dispatch(me());
+				dispatch(setGlobalMessage(messages.LOGIN_SUCCESS));
 			}
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -77,9 +79,8 @@ export const login = (data: LoginDataRequest) =>
 					status: error.response?.status || 500,
 					message: error.message
 				}));
-				console.error("Error during login:", error);
-				return [errorMessages.ERROR_DURING_LOGIN]; // Ошибка на сервере
 			}
+			dispatch(setSnackbarError(authErrors.LOGIN_ERROR));
 		}
 	}
 
@@ -93,10 +94,17 @@ export const logout = () => async (dispatch: AppDispatch) => {
 			localStorage.removeItem('accessTokenExpiry');
 			localStorage.removeItem('refreshToken');
 			localStorage.removeItem('refreshTokenExpire');
+			dispatch(setGlobalMessage(messages.LOGOUT_SUCCESS));
 		}
 	} catch (error) {
-		console.error("Error during login:", error);
-		return [errorMessages.ERROR_DURING_LOGOUT]; // Ошибка на сервере
+		if (axios.isAxiosError(error)) {
+			dispatch(setGlobalError({
+				code: error.code || 'UNKNOWN_ERROR',
+				status: error.response?.status || 500,
+				message: error.message
+			}));
+		}
+		dispatch(setSnackbarError(authErrors.LOGOUT_ERROR));
 	}
 };
 
@@ -105,18 +113,7 @@ export const registration = (data: CustomerCreateDto) =>
 		try {
 			const response = await authAPI.register(data);
 			if (response.status === 200) {
-				debugger
-				console.log(response)
-				// const {accessToken, accessTokenExpiry, refreshToken, refreshTokenExpire} = response.data;
-
-				// localStorage.setItem('accessToken', accessToken);
-				// localStorage.setItem('accessTokenExpiry', accessTokenExpiry);
-				// localStorage.setItem('refreshToken', refreshToken);
-				// localStorage.setItem('refreshTokenExpire', refreshTokenExpire);
-
-				console.log('Registration successful');
-				// dispatch(setTokenAction(response.data))
-				// dispatch(me());
+				dispatch(setGlobalMessage(messages.REGISTRATION_SUCCESS));
 			}
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
@@ -125,9 +122,28 @@ export const registration = (data: CustomerCreateDto) =>
 					status: error.response?.status || 500,
 					message: error.message
 				}));
-				console.error("Error during registration:", error);
-				return [errorMessages.ERROR_DURING_REGISTRATION]; // Ошибка на сервере
 			}
+			dispatch(setSnackbarError(authErrors.REGISTRATION_ERROR));
+		}
+	}
+
+export const updateUser = (data: CustomerUpdateDto) =>
+	async (dispatch: AppDispatch) => {
+
+		try {
+			const response = await customerAPI.updateCustomerInfo(data);
+			if (response.status === 200) {
+				dispatch(setGlobalMessage(messages.PROFILE_INFO_UPDATE_SUCCESS));
+			}
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				dispatch(setGlobalError({
+					code: error.code || 'UNKNOWN_ERROR',
+					status: error.response?.status || 500,
+					message: error.message
+				}));
+			}
+			dispatch(setSnackbarError(authErrors.PROFILE_INFO_UPDATE_ERROR));
 		}
 	}
 
@@ -135,6 +151,5 @@ export const {
 	setAuthDataAction,
 	setTokenAction,
 	logoutAction,
-	setCaptchaUrl,
 } = authSlice.actions;
 export default authSlice.reducer;

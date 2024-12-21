@@ -1,5 +1,5 @@
 import instanceAPI from "./instanceAPI";
-import {ProductDto, RestaurantDto, ReviewDto} from "../types/dtos.ts";
+import {ProductDto, RestaurantDto, ReviewDto} from "../types/dtos";
 
 export const restaurantsAPI = {
 	async getAllRestaurants() {

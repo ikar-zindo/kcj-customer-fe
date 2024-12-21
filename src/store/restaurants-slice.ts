@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppDispatch} from "./store";
-import {RestaurantDto} from "../types/dtos.ts";
-import {setSnackbarError} from "./app-slice.ts";
-import {errorMessages} from "../utils/error-messages.ts";
-import {RestaurantState} from "../types/store/restaurants-interfaces.ts";
-import {restaurantsAPI} from "../api/restaurantsAPI.ts";
+import {RestaurantDto} from "../types/dtos";
+import {setSnackbarError} from "./app-slice";
+import {errorMessages} from "../utils/error-messages";
+import {RestaurantState} from "../types/store/restaurants-interfaces";
+import {restaurantsAPI} from "../api/restaurantsAPI";
 
 const initialState: RestaurantState = {
 	restaurants: []

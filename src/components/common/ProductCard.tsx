@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Box, Button, Card, CardActions, CardContent, CardMedia, Typography} from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import {useAppSnackbar} from "../../hooks/useAppSnackbar.tsx";
-import {locate} from "../../utils/locates/locate.ts";
-import {ProductDto} from "../../types/dtos.ts";
+import {useAppSnackbar} from "../../hooks/useAppSnackbar";
+import {locate} from "../../utils/locates/locate";
+import {ProductDto} from "../../types/dtos";
 
 interface ProductCardProps {
 	product: ProductDto;

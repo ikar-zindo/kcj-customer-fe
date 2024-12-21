@@ -1,7 +1,7 @@
 import React, {ReactNode, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {selectIsAuth} from "../selectors/auth-selectors";
-import {useAppSelector} from "../hooks/hooks.ts";
+import {useAppSelector} from "../hooks/hooks";
 
 interface WithAuthRedirectProps {
 	children: ReactNode;

@@ -52,7 +52,7 @@ const RegistrationForm: React.FC = () => {
 								{...register('firstName', {
 									required: authErrors.FIRSTNAME_IS_REQUIRED,
 									pattern: {
-										value: /^[a-zA-ZäöüßÄÖÜ\s]*$/,
+										value: /^[a-zA-ZÀ-ÿŁł'\-\s]+$/,
 										message: authErrors.INVALID_NAME_FORMAT,
 									},
 								})}
@@ -70,7 +70,7 @@ const RegistrationForm: React.FC = () => {
 								{...register('lastName', {
 									required: authErrors.LASTNAME_IS_REQUIRED,
 									pattern: {
-										value: /^[a-zA-ZäöüßÄÖÜ\s]*$/,
+										value: /^[a-zA-ZÀ-ÿŁł'\-\s]+$/,
 										message: authErrors.INVALID_NAME_FORMAT,
 									},
 								})}
@@ -144,7 +144,7 @@ const RegistrationForm: React.FC = () => {
 								{...register('address', {
 									required: authErrors.ADDRESS_IS_REQUIRED,
 									pattern: {
-										value: /^[A-Za-zäöüßÄÖÜ\s,.-]+\s\d+$/,
+										value: /^[A-Za-zÀ-ÿŁł\s,.-]+\s\d+$/,
 										message: authErrors.INVALID_ADDRESS,
 									},
 								})}

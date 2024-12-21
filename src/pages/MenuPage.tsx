@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {Container, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import ProductCard from "../components/common/ProductCard.tsx";
-import {useAppDispatch, useAppSelector} from "../hooks/hooks.ts";
-import {selectAllProducts} from "../selectors/products-selectors.ts";
-import {requestProductsThunk} from "../store/products-slice.ts";
+import ProductCard from "../components/common/ProductCard";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
+import {selectAllProducts} from "../selectors/products-selectors";
+import {requestProductsThunk} from "../store/products-slice";
 
 const MenuPage: React.FC = React.memo(() => {
 	const products = useAppSelector(selectAllProducts);

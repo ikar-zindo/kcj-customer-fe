@@ -1,20 +1,20 @@
 export const errorMessages = {
 	SERVER_ERROR_OCCURRED: "Server error occurred.",
-	ERROR_DURING_LOGIN: "Error during login.",
-	ERROR_DURING_REGISTRATION: "Error during registration.",
-	ERROR_DURING_LOGOUT: "Error during logout.",
 	UNAUTHORIZED_ACCESS: "Unauthorized access.",
 	ID_NOT_EXISTS: "ID should be exists.",
 	USERS_NOT_FOUND: "Users not found.",
 	PRODUCTS_NOT_FOUND: "Products not found.",
 	RESTAURANTS_NOT_FOUND: "Restaurants not found.",
 	FAILED_TO_FETCH_RATING: "Rating not found",
+	PROFILE_INFO_UPDATE_ERROR: "The profile has not been updated."
 }
 
 export const authErrors = {
-	ERROR_DURING_LOGIN: "Error during login.",
+	LOGIN_ERROR: "Error during login.",
+	LOGOUT_ERROR: "Error during logout.",
+	PROFILE_INFO_UPDATE_ERROR: "Update profile information.",
+	REGISTRATION_ERROR: "Error during registration.",
 	ERROR_DURING_REGISTRATION: "Error during registration.",
-	ERROR_DURING_LOGOUT: "Error during logout.",
 	MAX_LENGTH_30: "Max length is 30.",
 	FIRSTNAME_IS_REQUIRED: "First name is required.",
 	LASTNAME_IS_REQUIRED: "Last name is required.",

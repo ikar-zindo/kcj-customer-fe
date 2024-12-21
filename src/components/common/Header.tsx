@@ -10,19 +10,20 @@ import Menu from '@mui/material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {Button, Divider, Stack} from "@mui/material";
-import {Link} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks.ts";
-import {selectIsMobileDevice} from "../../selectors/app-selectors.ts";
-import {selectIsAuth} from "../../selectors/auth-selectors.ts";
-import {logout} from "../../store/auth-slice.ts";
+import {Link, useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {selectIsMobileDevice} from "../../selectors/app-selectors";
+import {selectIsAuth} from "../../selectors/auth-selectors";
+import {logout} from "../../store/auth-slice";
 import favicon from '../../assets/logo/favicon.ico'
 
 const Header = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const isMobileDevice = useAppSelector(selectIsMobileDevice);
+	const isAuth = useAppSelector(selectIsAuth);
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const isMenuOpen = Boolean(anchorEl);
-	const isAuth = useAppSelector(selectIsAuth);
 
 	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -54,8 +55,8 @@ const Header = () => {
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+			<MenuItem onClick={() => { navigate('/profile'); handleMenuClose(); }}>Profile</MenuItem>
+			<MenuItem onClick={() => { navigate('/settings'); handleMenuClose(); }}>Settings</MenuItem>
 			<Divider/>
 			<MenuItem onClick={handleSignOut}>Sign out</MenuItem>
 		</Menu>

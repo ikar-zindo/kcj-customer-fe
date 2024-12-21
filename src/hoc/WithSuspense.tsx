@@ -1,5 +1,5 @@
 import React from 'react';
-import Preloader from "../components/common/Preloader.tsx";
+import Preloader from "../components/common/Preloader";
 
 interface WithSuspenseProps {
 	Component: React.ComponentType;

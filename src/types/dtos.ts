@@ -24,6 +24,15 @@ export type CustomerCreateDto = {
 	postalCode: string;
 }
 
+export type CustomerUpdateDto = {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	address: string;
+	postalCode: string;
+}
+
 export interface CartDto {
 	id: string;
 	customer: CustomerDto;

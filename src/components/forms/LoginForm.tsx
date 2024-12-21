@@ -11,11 +11,11 @@ import {
 import Grid from "@mui/material/Grid2";
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { LoginDataRequest } from '../../types/api/auth-types';
+import { LoginDataRequest } from '../../types/api/auth-types.ts';
 import { authErrors } from '../../utils/error-messages.ts';
-import { locate } from '../../utils/locates/locate';
-import { useAppDispatch } from '../../hooks/hooks';
-import { login } from '../../store/auth-slice';
+import { locate } from '../../utils/locates/locate.ts';
+import { useAppDispatch } from '../../hooks/hooks.ts';
+import { login } from '../../store/auth-slice.ts';
 
 interface LoginFormProps {
 	captchaUrl?: string | null;
